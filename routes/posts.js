@@ -36,7 +36,7 @@ router.put('/:id', (req, res) => {
 
 // Destroy.
 router.delete('/:id', (req, res) => {
-  res.send('Destroy: /posts/:id');
+  res.send('Delete: /posts/:id');
 });
 
 module.exports = router;
