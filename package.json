@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon -e js,ejs ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -19,6 +19,10 @@
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
-    "locus": "^2.0.4"
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "locus": "^2.0.4",
+    "prettier": "^2.3.1"
   }
 }

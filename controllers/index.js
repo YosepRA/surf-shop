@@ -1,18 +1,24 @@
+const passport = require('passport');
+
 const User = require('../models/user');
 
 module.exports = {
-  postRegister(req, res, next) {
+  async postRegister(req, res) {
     const { password, ...userData } = req.body;
     const newUser = new User(userData);
 
-    User.register(newUser, password, (err) => {
-      if (err) {
-        console.log('User register error', err);
-        return next(err);
-      }
+    await User.register(newUser, password);
 
-      console.log('User registration successful.');
-      res.json({ success: true });
-    });
+    res.redirect('/');
+  },
+  postLogin(req, res, next) {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+    })(req, res, next);
+  },
+  getLogout(req, res) {
+    req.logout();
+    res.redirect('/');
   },
 };
