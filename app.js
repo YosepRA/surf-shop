@@ -8,6 +8,7 @@ const path = require('path');
 const logger = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const postsRouter = require('./routes/posts');
@@ -24,6 +25,7 @@ mongoose.connect(MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const dbConnection = mongoose.connection;
@@ -43,9 +45,10 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 /* ========== Passport and Session ========== */
 

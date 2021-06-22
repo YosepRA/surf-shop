@@ -1,0 +1,30 @@
+<h1>New post</h1>
+
+<form action="/posts" method="POST">
+  <div>
+    <input type="text" name="post[title]" id="title" placeholder="Title" />
+  </div>
+
+  <div>
+    <input type="text" name="post[price]" id="price" placeholder="Price" />
+  </div>
+
+  <div>
+    <textarea
+      name="post[description]"
+      id="description"
+      placeholder="Description"
+    ></textarea>
+  </div>
+
+  <div>
+    <input
+      type="text"
+      name="post[location]"
+      id="location"
+      placeholder="Location"
+    />
+  </div>
+
+  <button type="submit">Submit</button>
+</form>

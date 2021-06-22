@@ -1,42 +1,31 @@
 const express = require('express');
 
+const controllers = require('../controllers/posts');
+const { errorHandler } = require('../middleware');
+
 const router = express.Router();
 
 /* ========== Routes. ========== */
 
 // Index.
-router.get('/', (req, res) => {
-  res.send('Index: /posts');
-});
+router.get('/', errorHandler(controllers.postIndex));
 
 // New.
-router.get('/new', (req, res) => {
-  res.send('New: /posts/new');
-});
+router.get('/new', controllers.postNew);
 
 // Create.
-router.post('/', (req, res) => {
-  res.send('Create: /posts');
-});
+router.post('/', errorHandler(controllers.postCreate));
 
 // Show.
-router.get('/:id', (req, res) => {
-  res.send('Show: /posts/:id');
-});
+router.get('/:id', errorHandler(controllers.postShow));
 
 // Edit.
-router.get('/:id/edit', (req, res) => {
-  res.send('Edit: /posts/:id/edit');
-});
+router.get('/:id/edit', errorHandler(controllers.postEdit));
 
 // Update.
-router.put('/:id', (req, res) => {
-  res.send('Update: /posts/:id');
-});
+router.put('/:id', errorHandler(controllers.postUpdate));
 
 // Destroy.
-router.delete('/:id', (req, res) => {
-  res.send('Delete: /posts/:id');
-});
+router.delete('/:id', errorHandler(controllers.postDelete));
 
 module.exports = router;
