@@ -1,9 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 
 const controllers = require('../controllers/posts');
 const { errorHandler } = require('../middleware');
 
 const router = express.Router();
+
+/* ========== Multer config. ========== */
+
+const storage = multer.diskStorage({
+  destination: 'uploads',
+  filename(req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
 
 /* ========== Routes. ========== */
 
@@ -14,7 +25,11 @@ router.get('/', errorHandler(controllers.postIndex));
 router.get('/new', controllers.postNew);
 
 // Create.
-router.post('/', errorHandler(controllers.postCreate));
+router.post(
+  '/',
+  upload.array('images', 4),
+  errorHandler(controllers.postCreate),
+);
 
 // Show.
 router.get('/:id', errorHandler(controllers.postShow));

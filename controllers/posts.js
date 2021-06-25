@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const cloudinary = require('cloudinary').v2;
 
 module.exports = {
   // Post index.
@@ -12,8 +13,22 @@ module.exports = {
   },
   // Create post.
   async postCreate(req, res) {
-    const { post } = req.body;
-    const newPost = await Post.create(post);
+    const {
+      body: { post },
+      files,
+    } = req;
+
+    const postImages = [];
+    // Upload images to Cloudinary.
+    for (const file of files) {
+      const image = await cloudinary.uploader.upload(file.path);
+      postImages.push({
+        url: image.secure_url,
+        public_id: image.public_id,
+      });
+    }
+
+    const newPost = await Post.create({ ...post, images: postImages });
 
     res.redirect(`/posts/${newPost.id}`);
   },
